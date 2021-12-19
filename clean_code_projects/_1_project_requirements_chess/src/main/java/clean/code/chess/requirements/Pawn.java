@@ -1,50 +1,31 @@
 package clean.code.chess.requirements;
 
-public class Pawn {
+public class Pawn extends Piece {
 
-    private ChessBoard chessBoard;
-    private int xCoordinate;
-    private int yCoordinate;
-    private PieceColor pieceColor;
+
 
     public Pawn(PieceColor pieceColor) {
+        super(pieceColor);
         this.pieceColor = pieceColor;
     }
 
-    public ChessBoard getChesssBoard() {
-        return chessBoard;
+    public boolean IsValidMOveForPawn(int newY){
+        if(this.getPieceColor() == PieceColor.BLACK){
+            return (this.getYCoordinate() - 1 == newY);
+        }else{
+            return (this.getYCoordinate() + 1 == newY);
+        }
     }
 
-    public void setChessBoard(ChessBoard chessBoard) {
-        this.chessBoard = chessBoard;
-    }
-
-    public int getXCoordinate() {
-        return xCoordinate;
-    }
-
-    public void setXCoordinate(int value) {
-        this.xCoordinate = value;
-    }
-
-    public int getYCoordinate() {
-        return yCoordinate;
-    }
-
-    public void setYCoordinate(int value) {
-        this.yCoordinate = value;
-    }
-
-    public PieceColor getPieceColor() {
-        return this.pieceColor;
-    }
-
-    private void setPieceColor(PieceColor value) {
-        pieceColor = value;
-    }
 
     public void Move(MovementType movementType, int newX, int newY) {
-        throw new UnsupportedOperationException("Need to implement Pawn.Move()");
+        if(movementType == MovementType.CAPTURE){
+            throw new UnsupportedOperationException("Need to implement Pawn.Move() for capture");
+        }else{
+            if(this.getXCoordinate() == newX && IsValidMOveForPawn(newY)){
+                this.getChesssBoard().Add(this, newX, newY, pieceColor);
+            }
+        }
     }
 
     @Override
